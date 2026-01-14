@@ -359,15 +359,15 @@
 
   <nav class="bottom-nav" id="mainNavBar">
     <div class="nav-pill">
-      <button class="nav-item active" onclick="switchTab('home')">
+      <button class="nav-item active" onclick="switchTab('home', this)">
         <div class="nav-icon"><i class="fa-solid fa-house"></i></div>
         <span class="nav-label">Home</span>
       </button>
-      <button class="nav-item" onclick="switchTab('graph')">
+      <button class="nav-item" onclick="switchTab('graph', this)">
         <div class="nav-icon"><i class="fa-solid fa-chart-simple"></i></div>
         <span class="nav-label">Graph</span>
       </button>
-      <button class="nav-item" onclick="switchTab('list')">
+      <button class="nav-item" onclick="switchTab('list', this)">
         <div class="nav-icon"><i class="fa-solid fa-list-check"></i></div>
         <span class="nav-label">List</span>
       </button>
@@ -386,13 +386,26 @@
 
     // --- NEW: BACKEND COMMUNICATOR ---
     async function apiCall(action, payload = null) {
+      // Guard: If API URL is still default, return null (prevents crash)
+      if(API_URL.includes("YOUR_DEPLOYED")) {
+        console.warn("API URL not configured. Using dummy data.");
+        throw new Error("API URL Not Configured");
+      }
+
       try {
         const response = await fetch(API_URL, {
           method: "POST",
+          // Use 'text/plain' to avoid CORS preflight issues with GAS
+          headers: { "Content-Type": "text/plain" },
           body: JSON.stringify({ action: action, payload: payload })
         });
+        
         const result = await response.json();
-        return result;
+        
+        if (result.error) {
+            throw new Error(result.error);
+        }
+        return result.result;
       } catch (e) {
         console.error("API Error:", e);
         throw e;
@@ -403,24 +416,35 @@
 
     function fetchData() {
       document.getElementById('loader').style.display = 'flex';
-      const safetyTimer = setTimeout(() => { processData([]); }, 15000); 
       
-      // REPLACED: google.script.run -> apiCall
+      // Fallback data function
+      const loadFallback = () => {
+          console.log("Loading fallback data...");
+          const dummyData = [
+            { id: "402-7484615-1097145", reviewer: "SULEKHA DEVI", mediator: "YESIAM", product: "COOLER/TECKOOL", dealType: "RATING DEAL", total: 299, deducted: 50, commission: 0, refundable: 249, deliveryDate: "06/05/2025", filledDate: "", refundDate: "20/06/2025", paidDate: "08/01/2026", remarks: "20w", formLink: "https://google.com", status: "PENDING", phone: "919876543210", rowIndex: 2 },
+            { id: "402-7869160-6095552", reviewer: "BHUSHAN", mediator: "ANIRBAN", product: "BOULT-ASTRA", dealType: "REVIEW DEAL", total: 1204, deducted: 229, commission: 0, refundable: 975, deliveryDate: "22/06/2025", filledDate: "30/07/2025", refundDate: "", paidDate: "", remarks: "29", formLink: "", status: "WARNING", phone: "919988776655", rowIndex: 3 },
+            { id: "404-1234567-8901234", reviewer: "AMIT KUMAR", mediator: "SURESH", product: "REDMI BUDS 5", dealType: "RATING DEAL", total: 1999, deducted: 0, commission: 100, refundable: 2099, deliveryDate: "10/08/2025", filledDate: "12/08/2025", refundDate: "15/08/2025", paidDate: "15/08/2025", remarks: "Fast refund", formLink: "https://google.com", status: "PAID", phone: "918877665544", rowIndex: 4 }
+          ];
+          processData(dummyData);
+      };
+
+      // Safety timeout: if API hangs, load fallback after 10s
+      const safetyTimer = setTimeout(() => { loadFallback(); }, 10000); 
+      
       apiCall('getData')
-        .then(data => { clearTimeout(safetyTimer); processData(data); })
-        .catch(e => { clearTimeout(safetyTimer); processData([]); });
+        .then(data => { 
+            clearTimeout(safetyTimer); 
+            if(Array.isArray(data)) processData(data);
+            else loadFallback();
+        })
+        .catch(e => { 
+            clearTimeout(safetyTimer); 
+            loadFallback(); 
+        });
     }
 
     function processData(data) {
-      if(!data || data.length === 0) {
-          // Fallback Sample Data
-          data = [
-            { id: "402-7484615-1097145", reviewer: "SULEKHA DEVI", mediator: "YESIAM", product: "COOLER/TECKOOL", dealType: "RATING DEAL", total: 299, deducted: 50, commission: 0, refundable: 249, deliveryDate: "06/05/2025", filledDate: "", refundDate: "20/06/2025", paidDate: "08/01/2026", remarks: "20w", formLink: "https://google.com", status: "PENDING", phone: "919876543210", rowIndex: 2 },
-            { id: "402-7869160-6095552", reviewer: "BHUSHAN", mediator: "ANIRBAN", product: "BOULT-ASTRA", dealType: "REVIEW DEAL", total: 1204, deducted: 229, commission: 0, refundable: 975, deliveryDate: "22/06/2025", filledDate: "30/07/2025", refundDate: "", paidDate: "", remarks: "29", formLink: "", status: "WARNING", phone: "919988776655", rowIndex: 3 },
-            { id: "404-1234567-8901234", reviewer: "AMIT KUMAR", mediator: "SURESH", product: "REDMI BUDS 5", dealType: "RATING DEAL", total: 1999, deducted: 0, commission: 100, refundable: 2099, deliveryDate: "10/08/2025", filledDate: "12/08/2025", refundDate: "15/08/2025", paidDate: "15/08/2025", remarks: "Fast refund", formLink: "https://google.com", status: "PAID", phone: "918877665544", rowIndex: 4 },
-            { id: "405-9876543-2109876", reviewer: "PRIYA SINGH", mediator: "YESIAM", product: "SAMSUNG GALAXY M14", dealType: "FEEDBACK DEAL", total: 14000, deducted: 0, commission: 0, refundable: 14000, deliveryDate: "01/09/2025", filledDate: "", refundDate: "", paidDate: "", remarks: "Pending approval", formLink: "", status: "", phone: "917766554433", rowIndex: 5 }
-          ];
-      }
+      if(!data) data = [];
       allData = data.map(item => { return { ...item, logicStatus: getLogicStatus(item) }; });
       populateDropdowns();
       applyFilters(); 
@@ -450,7 +474,6 @@
       }
       
       filteredData.forEach((item, index) => {
-        // Only append to the visible grid to improve performance
         grid.innerHTML += generateCardHTML(item, index);
       });
     }
@@ -630,7 +653,6 @@
       const orgText = btn.innerHTML;
       btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> PREPARING...';
       
-      // REPLACED: google.script.run -> apiCall
       apiCall('getCsvData').then(csvContent => {
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
@@ -683,7 +705,6 @@
       }
       closeModal(); showToast("Order Updated (Syncing...)"); btn.innerText = oldText;
 
-      // REPLACED: google.script.run -> apiCall
       apiCall('updateOrder', updates).then(res => {
           if(res !== "SUCCESS") { alert("Sync Error: " + res); allData[idx] = oldDataSnapshot; if(filteredIndex > -1) filteredData[filteredIndex] = oldDataSnapshot; applyFilters(); } 
           else { showToast("Synced Successfully!"); }
@@ -696,7 +717,6 @@
         else { p.classList.remove('active'); }
     }
     
-    // REPLACED: google.script.run -> apiCall
     function fetchLogs() { apiCall('getRecentLogs').then(renderLogs).catch(e => console.log("Log error", e)); }
     
     function renderLogs(logs) {
@@ -727,20 +747,27 @@
         setTimeout(() => { t.classList.remove('active'); }, 3000); 
     }
 
-    function switchTab(tabName) {
-        document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
-        event.currentTarget.classList.add('active');
+    // FIXED: Now accepts btnElement to safely toggle active class
+    function switchTab(tabName, btnElement) {
+        // Prevent crash if function called without element
+        if(btnElement) {
+            document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+        }
+        
         const homeView = document.getElementById('view-home');
         const graphView = document.getElementById('view-graph');
         const listView = document.getElementById('view-list');
         
-        homeView.style.display = 'none'; graphView.style.display = 'none'; listView.style.display = 'none';
-        
-        if (tabName === 'home') { homeView.style.display = 'block'; applyFilters(); } 
-        else if (tabName === 'graph') { graphView.style.display = 'block'; } 
-        else if (tabName === 'list') { listView.style.display = 'block'; applyFilters(); }
-        
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if(homeView && graphView && listView) {
+            homeView.style.display = 'none'; graphView.style.display = 'none'; listView.style.display = 'none';
+            
+            if (tabName === 'home') { homeView.style.display = 'block'; applyFilters(); } 
+            else if (tabName === 'graph') { graphView.style.display = 'block'; } 
+            else if (tabName === 'list') { listView.style.display = 'block'; applyFilters(); }
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     }
     
     let lastScrollTop = 0;
@@ -753,8 +780,7 @@
         lastScrollTop = scrollTop;
     });
 
-    // REPLACED: google.script.run -> apiCall
     setInterval(()=>{ apiCall('serverPing').catch(e => console.log("Ping failed")); }, 180000);
   </script>
 </body>
-</html>
+              </html>
