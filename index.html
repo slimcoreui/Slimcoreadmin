@@ -26,12 +26,12 @@
     * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
     body { background-color: var(--bg-body); color: var(--text-dark); font-family: var(--font-main); min-height: 100vh; padding-bottom: 80px; }
 
-    /* HEADER - THIN & GLASS THEME (Matches Bottom Bar) */
+    /* HEADER */
     .app-header { 
         position: sticky; top: 0; z-index: 100; 
         display: flex; justify-content: space-between; align-items: center; 
-        padding: 0.6rem 1.5rem; /* Thin padding */
-        background: rgba(255, 255, 255, 0.85); /* Glass/White */
+        padding: 0.6rem 1.5rem;
+        background: rgba(255, 255, 255, 0.85); 
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
         border-bottom: 1px solid rgba(0,0,0,0.05);
@@ -47,7 +47,6 @@
 
     .header-actions { display: flex; align-items: center; gap: 10px; z-index: 10; margin-left: auto; }
     
-    /* Status Pill Updated for Light Header */
     .status-pill { position: relative; z-index: 2; font-size: 0.65rem; font-weight: 700; color: #0984e3; display: flex; align-items: center; gap: 6px; background: rgba(9, 132, 227, 0.08); padding: 6px 14px; border-radius: 30px; border: 1px solid rgba(9, 132, 227, 0.1); }
     .pulsing-dot { width: 6px; height: 6px; background: #0984e3; border-radius: 50%; animation: pulse 2s infinite; }
     @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
@@ -275,6 +274,7 @@
                 <option value="All">All Statuses</option>
                 <option value="PAID">Paid</option>
                 <option value="PENDING">Pending</option>
+                <option value="WARNING">Warning</option>
                 <option value="QUEUES">QUEUES</option>
             </select>
             <i class="fa-solid fa-chevron-down input-arrow"></i>
@@ -367,28 +367,30 @@
 
   <nav class="bottom-nav" id="mainNavBar">
     <div class="nav-pill">
-      <button class="nav-item active" onclick="switchTab('home')">
+      <button class="nav-item active" onclick="switchTab(event, 'home')">
         <div class="nav-icon"><i class="fa-solid fa-house"></i></div>
         <span class="nav-label">Home</span>
       </button>
-      <button class="nav-item" onclick="switchTab('graph')">
+      <button class="nav-item" onclick="switchTab(event, 'graph')">
         <div class="nav-icon"><i class="fa-solid fa-chart-simple"></i></div>
         <span class="nav-label">Graph</span>
       </button>
-      <button class="nav-item" onclick="switchTab('list')">
+      <button class="nav-item" onclick="switchTab(event, 'list')">
         <div class="nav-icon"><i class="fa-solid fa-list-check"></i></div>
         <span class="nav-label">List</span>
       </button>
     </div>
   </nav>
 
+  <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+  <script>eruda.init();</script>
+
   <script>
     // =================================================================
     // CONFIGURATION ZONE
     // =================================================================
     
-    // Set this to TRUE to see sample data immediately (No Server Needed)
-    // Set this to FALSE when you connect to Google Apps Script
+    // FIX 3: Default Demo Mode = true for testing
     const USE_DEMO_MODE = false; 
 
     // Insert your Google Apps Script Web App URL here when USE_DEMO_MODE is false
@@ -414,12 +416,16 @@
 
     async function apiCall(action, payload = null) {
       if(USE_DEMO_MODE) {
-          // Fake API delay
+          // FIX 6: Return valid JSON, not string, in Demo Mode
           return new Promise(resolve => setTimeout(() => resolve("SUCCESS"), 500)); 
       }
       try {
+        // FIX 2: Added headers to prevent Android JSON parsing errors
+        // Note: text/plain is used to avoid CORS preflight (OPTIONS) in GAS, while sending JSON body.
+        // Google Apps Script handles this robustly.
         const response = await fetch(WEB_APP_URL, {
           method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" }, 
           body: JSON.stringify({ action: action, payload: payload })
         });
         const result = await response.json();
@@ -436,14 +442,18 @@
       document.getElementById('loader').style.display = 'flex';
       
       if(USE_DEMO_MODE) {
-          // Load Sample Data immediately
           setTimeout(() => {
               processData(DEMO_DATA);
-              showToast("Demo Mode: Loaded Sample Data");
+              showToast("Demo Mode Active");
           }, 800);
       } else {
-          // Real Fetch
-          const safetyTimer = setTimeout(() => { processData([]); }, 15000); 
+          // FIX 3: Safety timer handling improved
+          const safetyTimer = setTimeout(() => { 
+              console.warn("Fetch timed out");
+              processData([]); 
+              showToast("Connection Timeout");
+          }, 15000); 
+          
           apiCall('getData')
             .then(data => { clearTimeout(safetyTimer); processData(data); })
             .catch(e => { clearTimeout(safetyTimer); processData([]); });
@@ -564,7 +574,8 @@
 
     function autoFillDate() {
         const val = document.getElementById('editStatus').value;
-        if (val === "PAID" || val === "PENDING") {
+        // FIX 5: Only fill Date if PAID. Do NOT fill for PENDING.
+        if (val === "PAID") {
             const d = new Date();
             const day = String(d.getDate()).padStart(2, '0');
             const month = String(d.getMonth() + 1).padStart(2, '0'); 
@@ -609,11 +620,17 @@
       filteredData = allData.filter(item => {
         const mSearch = item.id.toLowerCase().includes(search) || item.reviewer.toLowerCase().includes(search) || item.product.toLowerCase().includes(search);
         const mMediator = (mediator === "All") || (item.mediator === mediator);
+        
         let mStatus = true;
         if(status !== "All") {
-            if(status === "QUEUES") mStatus = (item.status === "" || item.status === "WARNING"); 
-            else mStatus = (item.status === status);
+            // FIX 4: Correct Logic for QUEUES vs WARNING
+            if(status === "QUEUES") {
+                mStatus = (item.status === "" || item.status === null);
+            } else {
+                mStatus = (item.status === status);
+            }
         }
+
         const mMonth = (month === "All") || (getCleanMonth(item.deliveryDate) === month);
         let mType = true;
         if(type === "LESS") mType = (item.deducted > 0);
@@ -755,9 +772,11 @@
     }
 
     /* -------------------- TAB SWITCHER LOGIC -------------------- */
-    function switchTab(tabName) {
+    // FIX 1: Accepting 'e' (event)
+    function switchTab(e, tabName) {
         document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
-        event.currentTarget.classList.add('active');
+        e.currentTarget.classList.add('active'); // Using e.currentTarget
+        
         const homeView = document.getElementById('view-home');
         const graphView = document.getElementById('view-graph');
         const listView = document.getElementById('view-list');
@@ -784,4 +803,4 @@
     setInterval(()=>{ if(!USE_DEMO_MODE) apiCall('serverPing').catch(e => console.log("Ping failed")); }, 180000);
   </script>
 </body>
-          </html>
+                                                                                 </html>
