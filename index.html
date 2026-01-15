@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>ADMIN | Preorder Panel</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
+
   <style>
     :root {
       --bg-body: #f3f4f6;
@@ -16,44 +16,49 @@
       --font-mono: 'JetBrains Mono', monospace;
 
       /* Gradients */
+      --grad-header: linear-gradient(135deg, #0984e3 0%, #74b9ff 100%);
       --grad-green: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
       --grad-orange: linear-gradient(135deg, #fdcb6e 0%, #e17055 100%);
-      --grad-red: linear-gradient(135deg, #ff7675 0%, #E91E63 100%); 
+      --grad-red: linear-gradient(135deg, #ff7675 0%, #d63031 100%);
       --grad-blue: linear-gradient(135deg, #0984e3 0%, #74b9ff 100%);
       --grad-purple: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; outline: none; -webkit-tap-highlight-color: transparent; }
-    body { background-color: var(--bg-body); color: var(--text-dark); font-family: var(--font-main); min-height: 100vh; padding-bottom: 80px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
+    body { background-color: var(--bg-body); color: var(--text-dark); font-family: var(--font-main); min-height: 100vh; padding-bottom: 60px; }
 
     /* HEADER */
-    .app-header { 
-        position: sticky; top: 0; z-index: 100; 
-        display: flex; justify-content: space-between; align-items: center; 
-        padding: 0.6rem 1.5rem;
-        background: rgba(255, 255, 255, 0.85); 
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border-bottom: 1px solid rgba(0,0,0,0.05);
-        color: var(--text-dark); 
-        box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
-    }
-    
-    .header-left { display: flex; align-items: center; gap: 12px; position: relative; z-index: 2; }
-    .logo-img { width: 35px; height: 35px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.1); object-fit: cover; background: #fff; }
+    .app-header { position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background: var(--grad-header); color: white; box-shadow: 0 4px 20px rgba(9, 132, 227, 0.3); overflow: visible; }
+    .header-left { display: flex; align-items: center; gap: 15px; position: relative; z-index: 2; }
+    .logo-img { width: 48px; height: 48px; border-radius: 12px; border: 2px solid rgba(255,255,255,0.8); object-fit: cover; background: #fff; }
     .logo-container { display: flex; flex-direction: column; justify-content: center; }
-    .logo { font-family: var(--font-mono); font-weight: 700; font-size: 1rem; letter-spacing: -0.5px; line-height: 1; color: #0984e3; }
-    .meta-bar { font-size: 0.55rem; font-weight: 600; letter-spacing: 1.5px; opacity: 0.6; text-transform: uppercase; margin-top: 2px; }
-
-    .header-actions { display: flex; align-items: center; gap: 10px; z-index: 10; margin-left: auto; }
+    .logo { font-family: var(--font-mono); font-weight: 700; font-size: 1.4rem; letter-spacing: -1px; line-height: 1.1; }
+    .meta-bar { font-size: 0.65rem; font-weight: 600; letter-spacing: 2px; opacity: 0.8; text-transform: uppercase; margin-top: 2px; }
     
-    .status-pill { position: relative; z-index: 2; font-size: 0.65rem; font-weight: 700; color: #0984e3; display: flex; align-items: center; gap: 6px; background: rgba(9, 132, 227, 0.08); padding: 6px 14px; border-radius: 30px; border: 1px solid rgba(9, 132, 227, 0.1); }
-    .pulsing-dot { width: 6px; height: 6px; background: #0984e3; border-radius: 50%; animation: pulse 2s infinite; }
+    .header-actions { display: flex; align-items: center; gap: 15px; z-index: 10; margin-left: auto; }
+    .status-pill { position: relative; z-index: 2; font-size: 0.75rem; font-weight: 700; color: #0984e3; display: flex; align-items: center; gap: 8px; background: #ffffff; padding: 6px 16px; border-radius: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    .pulsing-dot { width: 8px; height: 8px; background: #0984e3; border-radius: 50%; animation: pulse 2s infinite; }
     @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+    
+    /* NOTIFICATIONS */
+    .notif-btn { background: rgba(255,255,255,0.2); border: none; width: 40px; height: 40px; border-radius: 50%; color: white; cursor: pointer; font-size: 1.1rem; transition: 0.2s; position: relative; display: flex; align-items: center; justify-content: center; }
+    .notif-btn:hover { background: rgba(255,255,255,0.4); }
+    .notif-badge { position: absolute; top: 0; right: 0; width: 12px; height: 12px; background: #ff7675; border-radius: 50%; border: 2px solid #74b9ff; display: none; }
+    .notif-badge.show { display: block; }
+    .notif-dropdown { position: absolute; top: 55px; right: 0; width: 320px; background: white; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); padding: 0; display: none; flex-direction: column; overflow: hidden; color: #2d3436; animation: slideDown 0.2s ease; z-index: 200; }
+    .notif-dropdown.active { display: flex; }
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    .notif-header { padding: 15px; background: #f3f4f6; border-bottom: 1px solid #dfe6e9; font-weight: 800; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; }
+    .notif-list { max-height: 300px; overflow-y: auto; }
+    .notif-item { padding: 12px 15px; border-bottom: 1px solid #f1f2f6; font-size: 0.8rem; }
+    .notif-item:hover { background: #f9fafb; }
+    .notif-time { font-size: 0.7rem; color: #b2bec3; font-weight: 600; margin-bottom: 2px; }
+    .notif-id { font-family: var(--font-mono); color: #0984e3; font-weight: 700; }
+    .notif-detail { color: #636e72; margin-top: 2px; font-size: 0.75rem; }
 
     /* LAYOUT */
-    .main-layout { display: grid; grid-template-columns: 300px 1fr; gap: 2rem; max-width: 1600px; margin: 0 auto; width: 100%; padding: 2rem; padding-bottom: 100px; }
-    @media (max-width: 1024px) { .main-layout { grid-template-columns: 1fr; padding: 1rem; gap: 1.5rem; padding-bottom: 100px; } .app-header { padding: 0.5rem 1rem; } }
+    .main-layout { display: grid; grid-template-columns: 320px 1fr; gap: 2rem; max-width: 1600px; margin: 0 auto; width: 100%; padding: 2rem; }
+    @media (max-width: 1024px) { .main-layout { grid-template-columns: 1fr; padding: 1rem; gap: 1.5rem; } .app-header { padding: 1rem; } }
 
     /* COMPONENTS */
     .gold-card, .stat-card { border-radius: 24px; padding: 1.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.1); position: relative; overflow: visible; color: white; transition: transform 0.3s ease; border: none; }
@@ -63,31 +68,33 @@
     aside .gold-card:nth-of-type(2) { background: var(--grad-green); } 
     aside .gold-card:nth-of-type(3) { background: var(--grad-orange); }
 
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; }
     .stats-grid .stat-card:nth-child(1) { background: var(--grad-blue); }
     .stats-grid .stat-card:nth-child(2) { background: var(--grad-purple); }
     .stats-grid .stat-card:nth-child(3) { background: var(--grad-red); }
     .stats-grid .stat-card:nth-child(4) { background: var(--grad-orange); }
     .stats-grid .stat-card:nth-child(5) { background: var(--grad-green); }
     .stat-title { opacity: 0.9; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; position: relative; z-index: 2; }
-    .stat-value { font-size: 1.6rem; font-weight: 800; margin-top: 5px; position: relative; z-index: 2; }
+    .stat-value { font-size: 1.8rem; font-weight: 800; margin-top: 5px; position: relative; z-index: 2; }
     .wm-sidebar { position: absolute; bottom: -10px; right: -10px; font-size: 90px; color: rgba(255,255,255,0.15); transform: rotate(-10deg); pointer-events: none; z-index: 1; }
     .wm-stat { position: absolute; bottom: -15px; right: -10px; font-size: 80px; color: rgba(255,255,255,0.15); transform: rotate(-10deg); pointer-events: none; z-index: 1; }
 
-    /* INPUTS */
+    /* FORM & INPUTS */
     .input-group { position: relative; margin-bottom: 12px; z-index: 2; }
     .input-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.9); font-size: 0.9rem; pointer-events: none; z-index: 3; }
     .clear-icon { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: #ff7675; font-size: 1rem; cursor: pointer; z-index: 10; display: none; transition: 0.2s; }
+    .clear-icon:hover { transform: translateY(-50%) scale(1.2); }
     .input-arrow { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.6); font-size: 0.8rem; pointer-events: none; z-index: 3; }
-    .gold-input, .gold-select { width: 100%; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 12px 12px 12px 42px; border-radius: 12px; font-family: var(--font-main); font-size: 0.85rem; backdrop-filter: blur(5px); transition: all 0.25s ease; }
+    .gold-input, .gold-select { width: 100%; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 12px 12px 12px 42px; border-radius: 12px; font-family: var(--font-main); font-size: 0.9rem; backdrop-filter: blur(5px); transition: all 0.25s ease; }
     .gold-select { appearance: none; -webkit-appearance: none; cursor: pointer; }
+    .gold-input:hover, .gold-select:hover { background: rgba(255,255,255,0.3); box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
     .gold-select option { color: #333; background: #fff; padding: 10px; }
-    .form-label { font-size: 0.7rem; color: rgba(255,255,255,0.95); font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 6px; letter-spacing: 0.5px; position: relative; z-index: 2;}
+    .form-label { font-size: 0.75rem; color: rgba(255,255,255,0.95); font-weight: 700; text-transform: uppercase; display: block; margin-bottom: 6px; letter-spacing: 0.5px; position: relative; z-index: 2;}
     .btn-gold { width: 100%; background: white; color: #333; border: none; padding: 14px; border-radius: 12px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-transform: uppercase; transition: transform 0.2s; position: relative; z-index: 2; }
 
     /* ORDER CARDS */
-    .orders-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.5rem; }
-    .order-card { border-radius: 24px; border: none; display: flex; flex-direction: column; transition: all 0.3s; box-shadow: 0 5px 20px rgba(0,0,0,0.08); position: relative; overflow: hidden; color: white; height: 100%; }
+    .orders-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; }
+    .order-card { border-radius: 24px; border: none; display: flex; flex-direction: column; transition: all 0.3s; box-shadow: 0 5px 20px rgba(0,0,0,0.08); position: relative; overflow: hidden; color: white; }
     .order-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
     .card-paid { background: var(--grad-green); }
     .card-pending { background: var(--grad-red); } 
@@ -98,28 +105,43 @@
     .card-content { position: relative; z-index: 2; padding: 1.5rem; height: 100%; display: flex; flex-direction: column; }
     .card-head { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 15px; margin-bottom: 15px; position: relative; z-index: 1; }
     .card-id { font-family: monospace; font-weight: 800; cursor: pointer; text-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: color 0.2s;}
-    .card-badge { background: rgba(255,255,255,0.25); padding: 4px 10px; border-radius: 8px; font-size: 0.65rem; font-weight: 700; backdrop-filter: blur(4px); margin-bottom: 4px; display: inline-block; }
+    .card-id:hover { color: #ffeaa7; }
+    .card-meta { text-align: right; }
+    .card-badge { background: rgba(255,255,255,0.25); padding: 4px 10px; border-radius: 8px; font-size: 0.7rem; font-weight: 700; backdrop-filter: blur(4px); margin-bottom: 4px; display: inline-block; }
     .glass-panel { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 12px; margin-bottom: 10px; backdrop-filter: blur(4px); }
-    .prod-name { font-size: 1rem; font-weight: 700; line-height: 1.3; display: flex; align-items: center; gap: 8px; }
-    .deal-tag { font-size: 0.65rem; opacity: 0.9; margin-top: 4px; display: block; }
-    .money-row { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 4px; }
-    .total-row { border-top: 1px dashed rgba(255,255,255,0.4); margin-top: 8px; padding-top: 8px; font-size: 1.1rem; font-weight: 800; display: flex; justify-content: space-between; }
+    .prod-name { font-size: 1.1rem; font-weight: 700; line-height: 1.3; display: flex; align-items: center; gap: 8px; }
+    .deal-tag { font-size: 0.7rem; opacity: 0.9; margin-top: 4px; display: block; }
+    .money-row { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 4px; }
+    .total-row { border-top: 1px dashed rgba(255,255,255,0.4); margin-top: 8px; padding-top: 8px; font-size: 1.2rem; font-weight: 800; display: flex; justify-content: space-between; }
     .date-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.75rem; }
     .date-item span { display: block; font-size: 0.6rem; opacity: 0.8; text-transform: uppercase; font-weight: 700; }
     .date-item div { font-family: monospace; font-weight: 600; display: flex; align-items: center; gap: 5px; }
     .memo-text { font-size: 0.75rem; font-style: italic; display: flex; gap: 6px; }
-
+    
     /* ACTIONS */
     .action-row { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 10px; gap: 8px; flex-wrap: wrap; }
     .icon-group { display: flex; gap: 8px; align-items: center; }
     .status-pill-card { background: white; padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; box-shadow: 0 4px 10px rgba(0,0,0,0.15); white-space: nowrap; }
-    .text-paid { color: #00b894; } .text-pend { color: #d63031; } .text-err { color: #d63031; } .text-queues { color: #6c5ce7; }
-    .link-btn-external { text-decoration: none; background: #fff; padding: 8px 15px; border-radius: 20px; color: #2d3436; font-size: 0.7rem; font-weight: 800; text-align: center; display: inline-flex; align-items: center; gap: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); white-space: nowrap; }
-    .btn-icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer; border: none; font-size: 1rem; transition: transform 0.2s; text-decoration: none; }
-    .btn-icon:hover { transform: scale(1.1); background: #f9f9f9; }
-    .btn-wa-icon { color: #25D366; } .btn-edit-icon { color: #636e72; } .btn-edit-icon:hover { color: #0984e3; }
+    
+    .text-paid { color: #00b894; }
+    .text-pend { color: #d63031; } 
+    .text-err { color: #d63031; }
+    .text-queues { color: #6c5ce7; }
 
-    /* MODAL */
+    .link-btn-external { text-decoration: none; background: #fff; padding: 8px 15px; border-radius: 20px; color: #2d3436; font-size: 0.75rem; font-weight: 800; text-align: center; display: inline-flex; align-items: center; gap: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); white-space: nowrap; }
+    .btn-icon { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer; border: none; font-size: 1.1rem; transition: transform 0.2s; text-decoration: none; }
+    .btn-icon:hover { transform: scale(1.1); background: #f9f9f9; }
+    .btn-wa-icon { color: #25D366; } 
+    .btn-edit-icon { color: #636e72; }
+    .btn-edit-icon:hover { color: #0984e3; }
+
+    /* MOBILE RESPONSIVE TWEAKS */
+    @media (max-width: 480px) {
+        .status-pill-card, .link-btn-external { padding: 6px 10px; font-size: 0.65rem; }
+        .btn-icon { width: 32px; height: 32px; font-size: 0.9rem; }
+        .action-row { gap: 4px; justify-content: space-around; } 
+    }
+
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 200; display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
     .modal-overlay.active { display: flex; }
     .modal-box { background: #fff; width: 90%; max-width: 400px; padding: 30px; border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
@@ -128,50 +150,19 @@
     .modal-save { flex: 1; background: var(--grad-green); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer; }
     .modal-cancel { flex: 1; background: #f3f4f6; color: #2d3436; border: none; padding: 12px; border-radius: 12px; font-weight: 700; cursor: pointer; }
 
-    /* TOAST & LOADER */
-    .toast-box { position: fixed; top: 25px; right: 25px; background: white; color: #2d3436; padding: 15px 25px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border-left: 6px solid #00b894; display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 0.9rem; z-index: 10000; transform: translateX(200%); transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); }
+    /* TOAST */
+    .toast-box {
+        position: fixed; top: 25px; right: 25px; background: white; color: #2d3436; padding: 15px 25px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border-left: 6px solid #00b894;
+        display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 0.9rem; z-index: 10000; transform: translateX(200%); transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    }
     .toast-box.active { transform: translateX(0); }
     .toast-box i { color: #00b894; font-size: 1.2rem; }
+
     #loader { position: fixed; inset: 0; background: #fff; z-index: 300; display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 15px; }
     .spinner { width: 50px; height: 50px; border: 4px solid #f3f4f6; border-top-color: #0984e3; border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
     .leader-row { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.2); padding: 8px 0; font-size: 0.85rem; position: relative; z-index: 2; }
-    
-    /* SCROLL BTN */
-    .scroll-btn { position: fixed; bottom: 100px; right: 20px; width: 45px; height: 45px; border-radius: 50%; background: #0984e3; color: white; border: none; box-shadow: 0 4px 15px rgba(9, 132, 227, 0.4); cursor: pointer; z-index: 90; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: transform 0.2s; }
-    .scroll-btn:hover { transform: translateY(-5px); background: #74b9ff; }
-
-    /* NOTIFICATIONS */
-    .notif-btn { background: rgba(0,0,0,0.05); border: none; width: 35px; height: 35px; border-radius: 50%; color: #636e72; cursor: pointer; font-size: 1.1rem; transition: 0.2s; position: relative; display: flex; align-items: center; justify-content: center; }
-    .notif-btn:hover { background: rgba(0,0,0,0.1); color: #0984e3; }
-    .notif-badge { position: absolute; top: -2px; right: -2px; width: 10px; height: 10px; background: #ff7675; border-radius: 50%; border: 2px solid white; display: none; }
-    .notif-badge.show { display: block; }
-    .notif-dropdown { position: absolute; top: 55px; right: 0; width: 320px; background: white; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); padding: 0; display: none; flex-direction: column; overflow: hidden; color: #2d3436; animation: slideDown 0.2s ease; z-index: 200; }
-    .notif-dropdown.active { display: flex; }
-    @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-    .notif-header { padding: 15px; background: #f3f4f6; border-bottom: 1px solid #dfe6e9; font-weight: 800; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; }
-    .notif-list { max-height: 300px; overflow-y: auto; }
-    .notif-item { padding: 12px 15px; border-bottom: 1px solid #f1f2f6; font-size: 0.8rem; }
-    .notif-time { font-size: 0.7rem; color: #b2bec3; font-weight: 600; margin-bottom: 2px; }
-    .notif-id { font-family: var(--font-mono); color: #0984e3; font-weight: 700; }
-    .notif-detail { color: #636e72; margin-top: 2px; font-size: 0.75rem; }
-
-    /* --- BOTTOM NAV CSS --- */
-    .bottom-nav { position: fixed; bottom: 25px; left: 0; width: 100%; display: flex; justify-content: center; z-index: 900; pointer-events: none; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); }
-    .bottom-nav.nav-hidden { transform: translateY(150%); }
-    .nav-pill { pointer-events: auto; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); padding: 6px; border-radius: 50px; display: flex; gap: 5px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.5) inset; border: 1px solid rgba(255,255,255,0.3); }
-    .nav-item { background: transparent; border: none; padding: 10px 24px; border-radius: 40px; cursor: pointer; display: flex; align-items: center; gap: 8px; color: #b2bec3; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); position: relative; overflow: hidden; }
-    .nav-icon { font-size: 1.1rem; transition: transform 0.3s ease; }
-    .nav-label { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; max-width: 0; opacity: 0; white-space: nowrap; transition: all 0.3s ease; }
-    .nav-item.active { background: var(--grad-red); color: white; box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3); padding-right: 20px; padding-left: 20px; }
-    .nav-item.active .nav-label { max-width: 100px; opacity: 1; margin-left: 4px; }
-    .nav-item.active .nav-icon { transform: scale(1.1); }
-    .nav-item:hover:not(.active) { background: rgba(0,0,0,0.03); color: #636e72; }
-    @media (max-width: 480px) { .bottom-nav { bottom: 15px; } .nav-pill { padding: 5px; } .nav-item { padding: 10px 18px; } }
-    .view-section { animation: fadeInView 0.4s ease-out; }
-    @keyframes fadeInView { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-  </style> 
+  </style>
 </head>
 <body>
 
@@ -182,7 +173,7 @@
 
   <div id="loader">
     <div class="spinner"></div>
-    <div style="font-weight: 700; color: #0984e3; letter-spacing: 1px;">SYNCING DATA...</div>
+    <div style="font-weight: 700; color: #0984e3; letter-spacing: 1px;">DATA FETCHING...</div>
   </div>
 
   <div class="modal-overlay" id="editModal">
@@ -199,23 +190,27 @@
           </select>
           <i class="fa-solid fa-tag input-icon" style="color:#b2bec3;"></i>
       </div>
+
       <label class="form-label" style="color:#636e72;">Filled Date</label>
       <div class="input-group">
           <input type="text" id="editFilled" class="gold-input" style="background:#f9fafb; color:#2d3436; border:1px solid #dfe6e9;" placeholder="DD/MM/YYYY">
           <i class="fa-solid fa-pen-nib input-icon" style="color:#b2bec3;"></i>
       </div>
+      
       <label class="form-label" style="color:#636e72;">Paid Date</label>
       <div class="input-group">
           <input type="text" id="editPaid" class="gold-input" style="background:#f9fafb; color:#2d3436; border:1px solid #dfe6e9;" placeholder="DD/MM/YYYY">
           <i class="fa-solid fa-calendar-check input-icon" style="color:#b2bec3;"></i>
       </div>
+
       <label class="form-label" style="color:#636e72;">Remarks (Timeline)</label>
       <div class="input-group">
           <textarea id="editRemarks" class="gold-input" rows="3" style="background:#f9fafb; color:#2d3436; border:1px solid #dfe6e9; padding-left:12px;"></textarea>
       </div>
+
       <div class="modal-btn-row">
         <button class="modal-cancel" onclick="closeModal()">Cancel</button>
-        <button class="modal-save" id="saveBtn" onclick="saveChanges()">Save Update</button>
+        <button class="modal-save" id="saveBtn" onclick="saveChanges()">Save</button>
       </div>
     </div>
   </div>
@@ -224,8 +219,8 @@
     <div class="header-left">
         <img src="https://drive.google.com/thumbnail?id=1IgeL0FRaPXfpmnBEh7mKdpOa2Pgeqdn2&sz=w200" class="logo-img" alt="Logo">
         <div class="logo-container">
-            <div class="logo">PREORDER</div>
-            <div class="meta-bar">ADMIN DASHBOARD</div>
+            <div class="logo">PREORDER ADMIN PANEL</div>
+            <div class="meta-bar">MADE BY HARSHIT</div>
         </div>
     </div>
     <div class="header-actions">
@@ -237,7 +232,7 @@
             </button>
             <div id="notifPanel" class="notif-dropdown">
                 <div class="notif-header">
-                    <span>AUDIT LOGS</span>
+                    <span>RECENT EDITS</span>
                     <i class="fa-solid fa-xmark" style="cursor:pointer;" onclick="toggleNotifs()"></i>
                 </div>
                 <div id="notifList" class="notif-list">
@@ -263,27 +258,30 @@
       <div class="gold-card">
         <div class="gold-card-bg"><i class="fa-solid fa-filter wm-sidebar"></i></div>
         <label class="form-label">Filters</label>
+        
         <div class="input-group">
             <i class="fa-solid fa-handshake input-icon"></i>
             <select id="mediatorSelect" class="gold-select" onchange="applyFilters()"><option value="All">All Mediators</option></select>
             <i class="fa-solid fa-chevron-down input-arrow"></i>
         </div>
+
         <div class="input-group">
             <i class="fa-solid fa-tags input-icon"></i>
             <select id="statusSelect" class="gold-select" onchange="applyFilters()">
                 <option value="All">All Statuses</option>
                 <option value="PAID">Paid</option>
                 <option value="PENDING">Pending</option>
-                <option value="WARNING">Warning</option>
                 <option value="QUEUES">QUEUES</option>
             </select>
             <i class="fa-solid fa-chevron-down input-arrow"></i>
         </div>
+
         <div class="input-group">
             <i class="fa-solid fa-calendar-days input-icon"></i>
             <select id="monthSelect" class="gold-select" onchange="applyFilters()"><option value="All">All Months</option></select>
             <i class="fa-solid fa-chevron-down input-arrow"></i>
         </div>
+
         <div class="input-group">
             <i class="fa-solid fa-layer-group input-icon"></i>
             <select id="typeSelect" class="gold-select" onchange="applyFilters()">
@@ -294,6 +292,7 @@
             </select>
             <i class="fa-solid fa-chevron-down input-arrow"></i>
         </div>
+        
         <label class="form-label" style="margin-top: 15px;">Sort Order</label>
         <div class="input-group">
             <i class="fa-solid fa-arrow-down-wide-short input-icon"></i>
@@ -316,116 +315,53 @@
     </aside>
 
     <main style="display: flex; flex-direction: column; gap: 2rem;">
-      <div id="view-home" class="view-section active-view">
-        <div class="stats-grid">
-            <div class="stat-card">
-            <div class="gold-card-bg"><i class="fa-solid fa-boxes-stacked wm-stat"></i></div>
-            <div class="stat-title">Orders</div><div class="stat-value" id="statOrders">0</div>
-            </div>
-            <div class="stat-card">
-            <div class="gold-card-bg"><i class="fa-solid fa-wallet wm-stat"></i></div>
-            <div class="stat-title">Amount</div><div class="stat-value" id="statTotalValue">₹0</div>
-            </div>
-            <div class="stat-card">
-            <div class="gold-card-bg"><i class="fa-solid fa-scissors wm-stat"></i></div>
-            <div class="stat-title">Deducted</div><div class="stat-value" id="statDeducted">₹0</div>
-            </div>
-            <div class="stat-card">
-            <div class="gold-card-bg"><i class="fa-solid fa-rotate-left wm-stat"></i></div>
-            <div class="stat-title">Refundable</div><div class="stat-value" id="statRefundable">₹0</div>
-            </div>
-            <div class="stat-card">
-            <div class="gold-card-bg"><i class="fa-solid fa-chart-line wm-stat"></i></div>
-            <div class="stat-title">Commission</div><div class="stat-value" id="statCommission">₹0</div>
-            </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="gold-card-bg"><i class="fa-solid fa-boxes-stacked wm-stat"></i></div>
+          <div class="stat-title">Orders</div><div class="stat-value" id="statOrders">0</div>
         </div>
-        <div id="ordersGridHome" class="orders-grid" style="margin-top: 2rem;"></div>
+        <div class="stat-card">
+          <div class="gold-card-bg"><i class="fa-solid fa-wallet wm-stat"></i></div>
+          <div class="stat-title">Amount</div><div class="stat-value" id="statTotalValue">₹0</div>
+        </div>
+        <div class="stat-card">
+          <div class="gold-card-bg"><i class="fa-solid fa-scissors wm-stat"></i></div>
+          <div class="stat-title">Deducted</div><div class="stat-value" id="statDeducted">₹0</div>
+        </div>
+        <div class="stat-card">
+          <div class="gold-card-bg"><i class="fa-solid fa-rotate-left wm-stat"></i></div>
+          <div class="stat-title">Refundable</div><div class="stat-value" id="statRefundable">₹0</div>
+        </div>
+        <div class="stat-card">
+          <div class="gold-card-bg"><i class="fa-solid fa-chart-line wm-stat"></i></div>
+          <div class="stat-title">Commission</div><div class="stat-value" id="statCommission">₹0</div>
+        </div>
       </div>
 
-      <div id="view-graph" class="view-section" style="display: none;">
-          <div class="gold-card" style="background: white; color: #2d3436; text-align: center; padding: 4rem 2rem;">
-            <i class="fa-solid fa-chart-pie" style="font-size: 3rem; color: #E91E63; margin-bottom: 1rem;"></i>
-            <h2 style="font-weight: 800;">Analytics Hub</h2>
-            <p style="color: #636e72;">Detailed performance charts coming soon.</p>
-          </div>
-      </div>
-
-      <div id="view-list" class="view-section" style="display: none;">
-          <div style="margin-bottom: 1rem; font-weight: 700; color: #636e72;">FULL ORDER REGISTRY</div>
-          <div id="ordersGridList" class="orders-grid"></div>
-      </div>
-
+      <div id="ordersGrid" class="orders-grid"></div>
+      
       <footer style="text-align: center; color: #b2bec3; font-size: 0.8rem; margin-top: 20px; font-weight: 600; letter-spacing: 1px;">
         &copy; PREORDER ALL RIGHTS RESERVED
       </footer>
     </main>
   </div>
 
-  <button class="scroll-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
-    <i class="fa-solid fa-arrow-up"></i>
-  </button>
-
-  <nav class="bottom-nav" id="mainNavBar">
-    <div class="nav-pill">
-      <button class="nav-item active" onclick="switchTab(event, 'home')">
-        <div class="nav-icon"><i class="fa-solid fa-house"></i></div>
-        <span class="nav-label">Home</span>
-      </button>
-      <button class="nav-item" onclick="switchTab(event, 'graph')">
-        <div class="nav-icon"><i class="fa-solid fa-chart-simple"></i></div>
-        <span class="nav-label">Graph</span>
-      </button>
-      <button class="nav-item" onclick="switchTab(event, 'list')">
-        <div class="nav-icon"><i class="fa-solid fa-list-check"></i></div>
-        <span class="nav-label">List</span>
-      </button>
-    </div>
-  </nav>
-
-  <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
-  <script>eruda.init();</script>
-
   <script>
-    // =================================================================
-    // CONFIGURATION ZONE
-    // =================================================================
-    
-    // FIX 3: Default Demo Mode = true for testing
-    const USE_DEMO_MODE = false; 
-
-    // Insert your Google Apps Script Web App URL here when USE_DEMO_MODE is false
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyujCb0achermvJrD7Ug_07PRAdowTX2Rs-YU5J4b2RTSwefzOkU4NdO3RI9x0f4dhn1A/exec"; 
-    
-    // =================================================================
-
-    // SAMPLE DATA FOR DEMO MODE
-    const DEMO_DATA = [
-      { id: "ORD-2025-001", reviewer: "Rahul Kumar", product: "iPhone 15 Pro", dealType: "Preorder", total: 130000, deducted: 0, commission: 500, refundable: 130500, deliveryDate: "05/01/2025", filledDate: "06/01/2025", refundDate: "10/01/2025", paidDate: "10/01/2025", remarks: "Smooth transaction", formLink: "", mediator: "Amit Singh", phone: "919876543210", status: "PAID", rowIndex: 2 },
-      { id: "ORD-2025-002", reviewer: "Priya Sharma", product: "Samsung S24 Ultra", dealType: "Open Box", total: 110000, deducted: 2000, commission: 0, refundable: 108000, deliveryDate: "07/01/2025", filledDate: "08/01/2025", refundDate: "12/01/2025", paidDate: "", remarks: "Waiting for refund", formLink: "", mediator: "Amit Singh", phone: "919876543210", status: "PENDING", rowIndex: 3 },
-      { id: "ORD-2025-003", reviewer: "Vikram Singh", product: "MacBook Air M2", dealType: "General", total: 95000, deducted: 0, commission: 0, refundable: 95000, deliveryDate: "08/01/2025", filledDate: "", refundDate: "", paidDate: "15/01/2025", remarks: "Paid but filled date missing", formLink: "", mediator: "Sneha Gupta", phone: "919123456789", status: "PAID", rowIndex: 4 },
-      { id: "ORD-2025-004", reviewer: "Anjali Mehta", product: "OnePlus 12", dealType: "Preorder", total: 65000, deducted: 0, commission: 200, refundable: 65200, deliveryDate: "12/01/2025", filledDate: "", refundDate: "", paidDate: "", remarks: "Just delivered", formLink: "", mediator: "Sneha Gupta", phone: "919123456789", status: "", rowIndex: 5 },
-      { id: "ORD-2025-005", reviewer: "Rohan Das", product: "Sony WH-1000XM5", dealType: "Accessory", total: 25000, deducted: 500, commission: 0, refundable: 24500, deliveryDate: "14/01/2025", filledDate: "15/01/2025", refundDate: "", paidDate: "", remarks: "Box slightly damaged", formLink: "", mediator: "Amit Singh", phone: "919876543210", status: "WARNING", rowIndex: 6 },
-      { id: "ORD-2025-006", reviewer: "Kavita Reddi", product: "iPad Air 5", dealType: "General", total: 55000, deducted: 0, commission: 0, refundable: 55000, deliveryDate: "18/01/2025", filledDate: "19/01/2025", refundDate: "20/01/2025", paidDate: "20/01/2025", remarks: "All good", formLink: "https://forms.gle/sample", mediator: "Rajesh Kumar", phone: "919988776655", status: "PAID", rowIndex: 7 },
-      { id: "ORD-2025-007", reviewer: "Arjun Kapoor", product: "Pixel 8 Pro", dealType: "Preorder", total: 85000, deducted: 0, commission: 300, refundable: 85300, deliveryDate: "20/01/2025", filledDate: "", refundDate: "", paidDate: "", remarks: "Order pending processing", formLink: "", mediator: "Rajesh Kumar", phone: "919988776655", status: "", rowIndex: 8 },
-      { id: "ORD-2025-008", reviewer: "Neha Dhupia", product: "Galaxy Watch 6", dealType: "Accessory", total: 20000, deducted: 0, commission: 100, refundable: 20100, deliveryDate: "22/01/2025", filledDate: "23/01/2025", refundDate: "25/01/2025", paidDate: "", remarks: "High priority refund", formLink: "", mediator: "Sneha Gupta", phone: "919123456789", status: "PENDING", rowIndex: 9 }
-    ];
+    // -----------------------------------------------------------------
+    // REPLACE THIS URL WITH YOUR GOOGLE APPS SCRIPT WEB APP URL
+    // -----------------------------------------------------------------
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx1mFH5dDgrZagQOYewsbFXAxBpHHTYnjWcQF2yRqJKU6-GvGOV8OIHJ2GSTn_93zQ/exec"; 
+    // -----------------------------------------------------------------
 
     let allData = [];
     let filteredData = [];
     let currentEditId = null;
 
+    // --- API HELPER ---
     async function apiCall(action, payload = null) {
-      if(USE_DEMO_MODE) {
-          // FIX 6: Return valid JSON, not string, in Demo Mode
-          return new Promise(resolve => setTimeout(() => resolve("SUCCESS"), 500)); 
-      }
       try {
-        // FIX 2: Added headers to prevent Android JSON parsing errors
-        // Note: text/plain is used to avoid CORS preflight (OPTIONS) in GAS, while sending JSON body.
-        // Google Apps Script handles this robustly.
         const response = await fetch(WEB_APP_URL, {
           method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" }, 
           body: JSON.stringify({ action: action, payload: payload })
         });
         const result = await response.json();
@@ -436,33 +372,41 @@
       }
     }
 
+    // --- INIT ---
     window.onload = function() { fetchData(); };
 
     function fetchData() {
       document.getElementById('loader').style.display = 'flex';
       
-      if(USE_DEMO_MODE) {
-          setTimeout(() => {
-              processData(DEMO_DATA);
-              showToast("Demo Mode Active");
-          }, 800);
-      } else {
-          // FIX 3: Safety timer handling improved
-          const safetyTimer = setTimeout(() => { 
-              console.warn("Fetch timed out");
-              processData([]); 
-              showToast("Connection Timeout");
-          }, 15000); 
-          
-          apiCall('getData')
-            .then(data => { clearTimeout(safetyTimer); processData(data); })
-            .catch(e => { clearTimeout(safetyTimer); processData([]); });
-      }
+      const safetyTimer = setTimeout(() => {
+         console.log("Force loading sample data due to timeout...");
+         processData([]);
+      }, 15000); // Increased timeout for fetch
+
+      apiCall('getData')
+        .then(data => {
+            clearTimeout(safetyTimer); 
+            processData(data);
+        })
+        .catch(e => {
+            clearTimeout(safetyTimer); 
+            console.log(e); 
+            processData([]); 
+        });
     }
 
     function processData(data) {
-      if(!data || data.length === 0) data = [];
-      allData = data.map(item => { return { ...item, logicStatus: getLogicStatus(item) }; });
+      if(!data || data.length === 0) {
+        // Sample data for fallback/demo
+        data = [
+          { id: "402-7484615-1097145", reviewer: "SULEKHA DEVI", mediator: "YESIAM", product: "COOLER/TECKOOL", dealType: "RATING DEAL", total: 299, deducted: 50, commission: 0, refundable: 249, deliveryDate: "06/05/2025", filledDate: "", refundDate: "20/06/2025", paidDate: "08/01/2026", remarks: "20w", formLink: "https://google.com", status: "PENDING", phone: "919876543210", rowIndex: 2 },
+          { id: "4027869160609555152", reviewer: "BHUSHAN", mediator: "ANIRBAN", product: "BOULT-ASTRA", dealType: "REVIEW DEAL", total: 1204, deducted: 229, commission: 0, refundable: 975, deliveryDate: "22/06/2025", filledDate: "30/07/2025", refundDate: "", paidDate: "", remarks: "29", formLink: "", status: "WARNING", phone: "", rowIndex: 3 }
+        ];
+      }
+      
+      allData = data.map(item => {
+        return { ...item, logicStatus: getLogicStatus(item) };
+      });
       populateDropdowns();
       applyFilters(); 
       document.getElementById('loader').style.display = 'none';
@@ -475,37 +419,40 @@
         return logicStatus;
     }
 
+    // --- RENDER LOGIC ---
     function renderCards() {
-      const isListView = document.getElementById('view-list').style.display !== 'none';
-      const targetGridId = isListView ? 'ordersGridList' : 'ordersGridHome';
-      const grid = document.getElementById(targetGridId);
-      if (!grid) return; 
-
+      const grid = document.getElementById('ordersGrid');
       grid.innerHTML = "";
       if(filteredData.length === 0) {
         grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;color:#999;font-weight:700;">No Orders Found</div>`;
         return;
       }
       
+      // Loop now includes index for Order Numbering
       filteredData.forEach((item, index) => {
-        grid.innerHTML += generateCardHTML(item, index);
-      });
-    }
-
-    function generateCardHTML(item, index) {
         let themeClass = "card-queues"; 
         let textClass = "text-queues";
         let displayStatus = item.status || "QUEUES";
 
-        if (item.status === "PAID") { themeClass = "card-paid"; textClass = "text-paid"; } 
-        else if (item.status === "PENDING") { themeClass = "card-pending"; textClass = "text-pend"; } 
-        else if (item.status === "WARNING") { themeClass = "card-error"; textClass = "text-err"; }
-        if (item.logicStatus === "ERROR") { themeClass = "card-error"; textClass = "text-err"; displayStatus = "ERROR (Check)"; }
+        if (item.status === "PAID") {
+             themeClass = "card-paid"; textClass = "text-paid";
+        } else if (item.status === "PENDING") {
+             themeClass = "card-pending"; textClass = "text-pend"; 
+        } else if (item.status === "WARNING") {
+             themeClass = "card-error"; textClass = "text-err"; 
+        }
 
+        if (item.logicStatus === "ERROR") {
+             themeClass = "card-error"; textClass = "text-err";
+             displayStatus = "ERROR (Check)";
+        }
+
+        // Font scaling for ID
         const idLen = item.id.length;
-        let idFontSize = "1rem"; 
+        let idFontSize = "1.1rem"; 
         if (idLen > 25) idFontSize = "0.75rem";
         else if (idLen > 18) idFontSize = "0.85rem";
+        else if (idLen > 14) idFontSize = "0.95rem";
 
         let middleRow = "";
         if (item.deducted > 0) middleRow = `<div class="money-row"><span>Deducted</span><span style="color:#ffcccc; font-weight:700;">-${fmt(item.deducted)}</span></div>`;
@@ -513,69 +460,79 @@
         
         let formBtn = "";
         if(item.formLink && item.formLink.trim().length > 5){
-            formBtn = `<a href="${item.formLink}" target="_blank" class="link-btn-external"><i class="fa-solid fa-arrow-up-right-from-square"></i> OPEN FORM</a>`;
+             formBtn = `<a href="${item.formLink}" target="_blank" class="link-btn-external"><i class="fa-solid fa-arrow-up-right-from-square"></i> OPEN FORM</a>`;
         }
 
+        // --- WHATSAPP LOGIC (Fixed Encoding) ---
         let waBtn = "";
         if(item.phone && item.phone.trim().length > 5) {
             const msg = `Hi _${item.mediator}_, \uD83D\uDC4B\n\n\uD83D\uDCC3 This is a kind reminder regarding the refund for these orders\uD83D\uDC47\uD83C\uDFFB\n\n*\uD83D\uDCE6 Order ID: \`${item.id}\`*\n\n\u26A0\uFE0F _The refund timeline is today, please process this at the earliest._ \uD83D\uDEA8\n\nTotal Refund Due: ${fmt(item.refundable)}\n\n~PREORDER \u303D\uFE0F`;
-            const waLink = `https://wa.me/${item.phone}?text=${encodeURIComponent(msg)}`;
+            const encodedMsg = encodeURIComponent(msg);
+            const waLink = `https://wa.me/${item.phone}?text=${encodedMsg}`;
             waBtn = `<a href="${waLink}" target="_blank" class="btn-icon btn-wa-icon" title="Send Reminder"><i class="fa-solid fa-bell"></i></a>`;
         }
         
-        return `
-        <div id="card-wrapper-${item.id}" class="order-card ${themeClass}">
-        <div class="card-content">
+        const card = document.createElement('div');
+        card.className = `order-card ${themeClass}`;
+        card.innerHTML = `
+          <div class="card-content">
             <div class="card-head">
-            <div style="width:100%; overflow:hidden;">
-                <div class="card-id" onclick="copy('${item.id}')" style="font-size:${idFontSize}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+               <div style="width:100%; overflow:hidden;">
+                  <div class="card-id" onclick="copy('${item.id}')" style="font-size:${idFontSize}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
                     ${item.id} <i class="fa-regular fa-copy" style="font-size:0.8em"></i>
-                </div>
-                <span class="deal-tag">${item.dealType}</span>
-                <div class="card-badge" style="margin-top:6px; font-size: 0.65rem;"><i class="fa-solid fa-table-list"></i> ROW ${item.rowIndex}</div>
-            </div>
-            <div class="card-meta">
-                <div class="card-badge" style="background:rgba(255,255,255,0.4); color:#2d3436;">ORDER NO ${index + 1}</div>
-                <div class="card-badge"><i class="fa-solid fa-user"></i> ${item.reviewer}</div>
-                <div class="card-badge" style="margin-top:5px;"><i class="fa-solid fa-handshake"></i> ${item.mediator}</div>
-            </div>
-            <i class="fa-solid fa-file-invoice head-echo"></i>
-            </div>
-            <div class="glass-panel">
-            <div class="prod-name"><i class="fa-solid fa-mobile-screen"></i> &nbsp; ${item.product}</div>
-            </div>
-            <div class="glass-panel">
-            <div class="money-row"><span>Total</span><span>${fmt(item.total)}</span></div>
-            ${middleRow}
-            <div class="total-row"><span>REFUNDABLE</span><span>${fmt(item.refundable)}</span></div>
+                  </div>
+                  <span class="deal-tag">${item.dealType}</span>
+                  
+                  <div class="card-badge" style="margin-top:6px; font-size: 0.65rem;">
+                    <i class="fa-solid fa-table-list"></i> ROW ${item.rowIndex}
+                  </div>
+               </div>
+               <div class="card-meta">
+                  <div class="card-badge" style="background:rgba(255,255,255,0.4); color:#2d3436;">#${index + 1}</div>
+
+                  <div class="card-badge"><i class="fa-solid fa-user"></i> ${item.reviewer}</div>
+                  <div class="card-badge" style="margin-top:5px;"><i class="fa-solid fa-handshake"></i> ${item.mediator}</div>
+               </div>
+               <i class="fa-solid fa-file-invoice head-echo"></i>
             </div>
             <div class="glass-panel">
-            <div class="date-grid">
-                <div class="date-item"><span>DELIVERED</span><div><i class="fa-solid fa-truck-fast"></i> ${item.deliveryDate||'-'}</div></div>
-                <div class="date-item"><span>FILLED</span><div><i class="fa-solid fa-pen-nib"></i> ${item.filledDate||'-'}</div></div>
-                <div class="date-item"><span>REFUND DATE</span><div><i class="fa-solid fa-clock-rotate-left"></i> ${item.refundDate||'-'}</div></div>
-                <div class="date-item"><span>PAID DATE</span><div><i class="fa-solid fa-calendar-check"></i> ${item.paidDate||'-'}</div></div>
-            </div>
+               <div class="prod-name"><i class="fa-solid fa-mobile-screen"></i> &nbsp; ${item.product}</div>
             </div>
             <div class="glass-panel">
-            <div class="memo-text"><i class="fa-solid fa-quote-left"></i> &nbsp; ${item.remarks||'No Timeline Info'}</div>
+               <div class="money-row"><span>Total</span><span>${fmt(item.total)}</span></div>
+               ${middleRow}
+               <div class="total-row"><span>REFUNDABLE</span><span>${fmt(item.refundable)}</span></div>
             </div>
+            <div class="glass-panel">
+               <div class="date-grid">
+                  <div class="date-item"><span>DELIVERED</span><div><i class="fa-solid fa-truck-fast"></i> ${item.deliveryDate||'-'}</div></div>
+                  <div class="date-item"><span>FILLED</span><div><i class="fa-solid fa-pen-nib"></i> ${item.filledDate||'-'}</div></div>
+                  <div class="date-item"><span>REFUND DATE</span><div><i class="fa-solid fa-clock-rotate-left"></i> ${item.refundDate||'-'}</div></div>
+                  <div class="date-item"><span>PAID DATE</span><div><i class="fa-solid fa-calendar-check"></i> ${item.paidDate||'-'}</div></div>
+               </div>
+            </div>
+            <div class="glass-panel">
+               <div class="memo-text"><i class="fa-solid fa-quote-left"></i> &nbsp; ${item.remarks||'No Timeline Info'}</div>
+            </div>
+            
             <div class="action-row">
-            <div class="status-pill-card ${textClass}">${displayStatus}</div>
-            <div class="icon-group">
-                ${waBtn}
-                <button class="btn-icon btn-edit-icon" onclick="openEditModal('${item.id}')"><i class="fa-solid fa-pen"></i></button>
+               <div class="status-pill-card ${textClass}">${displayStatus}</div>
+               <div class="icon-group">
+                   ${waBtn}
+                   <button class="btn-icon btn-edit-icon" onclick="openEditModal('${item.id}')"><i class="fa-solid fa-pen"></i></button>
+               </div>
+               ${formBtn}
             </div>
-            ${formBtn}
-            </div>
-        </div>
-        </div>`;
+          </div>
+        `;
+        grid.appendChild(card);
+      });
     }
 
+    // --- NEW: AUTO DATE FILL ---
     function autoFillDate() {
         const val = document.getElementById('editStatus').value;
-        // FIX 5: Only fill Date if PAID. Do NOT fill for PENDING.
-        if (val === "PAID") {
+        if (val === "PAID" || val === "PENDING") {
             const d = new Date();
             const day = String(d.getDate()).padStart(2, '0');
             const month = String(d.getMonth() + 1).padStart(2, '0'); 
@@ -584,11 +541,14 @@
         }
     }
 
+    // --- SEARCH & FILTERS ---
     function handleSearchKey() {
         const val = document.getElementById('searchInput').value;
-        document.getElementById('searchClearBtn').style.display = val.length > 0 ? 'block' : 'none';
+        const btn = document.getElementById('searchClearBtn');
+        btn.style.display = val.length > 0 ? 'block' : 'none';
         applyFilters();
     }
+
     function clearSearch() {
         document.getElementById('searchInput').value = '';
         document.getElementById('searchClearBtn').style.display = 'none';
@@ -599,7 +559,11 @@
       const mediators = [...new Set(allData.map(d => d.mediator))].sort();
       const medSelect = document.getElementById('mediatorSelect');
       medSelect.innerHTML = '<option value="All">All Mediators</option>';
-      mediators.forEach(m => { if(m && m!="N/A") { let opt = document.createElement('option'); opt.value = m; opt.textContent = m; medSelect.appendChild(opt); }});
+      mediators.forEach(m => { 
+          if(m && m!="N/A") { 
+            let opt = document.createElement('option'); opt.value = m; opt.textContent = m; medSelect.appendChild(opt); 
+          }
+      });
 
       const months = new Set();
       allData.forEach(d => { const m = getCleanMonth(d.deliveryDate); if (m !== "Invalid") months.add(m); });
@@ -620,17 +584,11 @@
       filteredData = allData.filter(item => {
         const mSearch = item.id.toLowerCase().includes(search) || item.reviewer.toLowerCase().includes(search) || item.product.toLowerCase().includes(search);
         const mMediator = (mediator === "All") || (item.mediator === mediator);
-        
         let mStatus = true;
         if(status !== "All") {
-            // FIX 4: Correct Logic for QUEUES vs WARNING
-            if(status === "QUEUES") {
-                mStatus = (item.status === "" || item.status === null);
-            } else {
-                mStatus = (item.status === status);
-            }
+             if(status === "QUEUES") mStatus = (item.status === "" || item.status === "WARNING"); 
+             else mStatus = (item.status === status);
         }
-
         const mMonth = (month === "All") || (getCleanMonth(item.deliveryDate) === month);
         let mType = true;
         if(type === "LESS") mType = (item.deducted > 0);
@@ -641,10 +599,10 @@
       });
 
       filteredData.sort((a, b) => {
-        const dateA = parseDateToTs(a.deliveryDate);
-        const dateB = parseDateToTs(b.deliveryDate);
-        if (sortOrder === 'DESC') return dateB - dateA; 
-        return dateA - dateB; 
+         const dateA = parseDateToTs(a.deliveryDate);
+         const dateB = parseDateToTs(b.deliveryDate);
+         if (sortOrder === 'DESC') return dateB - dateA; 
+         return dateA - dateB; 
       });
 
       renderStats();
@@ -664,30 +622,44 @@
 
     function renderLeaderboard() {
       const map = {};
-      filteredData.forEach(d => { if(d.mediator && d.mediator !== "N/A") { if(!map[d.mediator]) map[d.mediator]=0; map[d.mediator]++; }});
+      filteredData.forEach(d => { 
+        if(d.mediator && d.mediator !== "N/A") {
+           if(!map[d.mediator]) map[d.mediator]=0; 
+           map[d.mediator]++;
+        }
+      });
       const sorted = Object.entries(map).sort((a,b)=>b[1]-a[1]).slice(0,5);
-      document.getElementById('leaderboardList').innerHTML = sorted.map((i,x)=>`<div class="leader-row"><span style="color:white; opacity:0.8;">#${x+1} ${i[0]}</span><span style="font-weight:700;">${i[1]} Orders</span></div>`).join('');
+      document.getElementById('leaderboardList').innerHTML = sorted.map((i,x)=>`
+        <div class="leader-row"><span style="color:white; opacity:0.8;">#${x+1} ${i[0]}</span><span style="font-weight:700;">${i[1]} Orders</span></div>
+      `).join('');
     }
 
+    // --- CSV EXPORT ---
     function downloadCSV() {
       const btn = document.querySelector('.btn-gold');
       const orgText = btn.innerHTML;
       btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> PREPARING...';
-      apiCall('getCsvData').then(csvContent => {
-            if(USE_DEMO_MODE) { 
-                showToast("Demo CSV Exported!"); 
-                btn.innerHTML = orgText;
-                return; 
-            }
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement("a");
-            link.setAttribute("href", url); link.setAttribute("download", "PreorderData.csv");
-            document.body.appendChild(link); link.click(); document.body.removeChild(link);
-            btn.innerHTML = orgText; showToast("CSV Downloaded!");
-        }).catch(e => { alert("Export Failed: " + e); btn.innerHTML = orgText; });
+      
+      apiCall('getCsvData')
+        .then(csvContent => {
+             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+             const url = URL.createObjectURL(blob);
+             const link = document.createElement("a");
+             link.setAttribute("href", url);
+             link.setAttribute("download", "PreorderData.csv");
+             document.body.appendChild(link);
+             link.click();
+             document.body.removeChild(link);
+             btn.innerHTML = orgText;
+             showToast("CSV Downloaded!");
+        })
+        .catch(e => {
+            alert("Export Failed: " + e);
+            btn.innerHTML = orgText;
+        });
     }
 
+    // --- EDIT & SAVE (With Optimistic UI) ---
     function openEditModal(id) {
       const order = allData.find(d => d.id === id);
       if(!order) return;
@@ -706,101 +678,141 @@
       const btn = document.getElementById('saveBtn');
       const oldText = btn.innerText;
       btn.innerText = "Saving...";
+
       const newStatus = document.getElementById('editStatus').value;
       const newFilled = document.getElementById('editFilled').value;
       const newPaid = document.getElementById('editPaid').value;
       const newRemarks = document.getElementById('editRemarks').value;
 
-      const updates = { id: currentEditId, status: newStatus, filledDate: newFilled, paidDate: newPaid, remarks: newRemarks };
-      const idx = allData.findIndex(d => d.id === currentEditId);
-      const oldDataSnapshot = { ...allData[idx] }; 
-      
-      if(idx > -1) {
-        allData[idx].status = newStatus; allData[idx].filledDate = newFilled; allData[idx].paidDate = newPaid; allData[idx].remarks = newRemarks;
-        allData[idx].logicStatus = getLogicStatus(allData[idx]);
-      }
-      const filteredIndex = filteredData.findIndex(d => d.id === currentEditId);
-      if(filteredIndex > -1) {
-        filteredData[filteredIndex] = allData[idx];
-        const newCardHTML = generateCardHTML(allData[idx], filteredIndex);
-        const existingCard = document.getElementById(`card-wrapper-${currentEditId}`);
-        if(existingCard) existingCard.outerHTML = newCardHTML;
-      }
-      closeModal(); showToast("Order Updated!"); btn.innerText = oldText;
+      const updates = {
+        id: currentEditId,
+        status: newStatus,
+        filledDate: newFilled,
+        paidDate: newPaid,
+        remarks: newRemarks
+      };
 
-      apiCall('updateOrder', updates).then(res => {
-          if(!USE_DEMO_MODE && res !== "SUCCESS") { alert("Sync Error: " + res); allData[idx] = oldDataSnapshot; if(filteredIndex > -1) filteredData[filteredIndex] = oldDataSnapshot; applyFilters(); } 
-          else if (!USE_DEMO_MODE) { showToast("Synced Successfully!"); }
-        }).catch(e => { alert("Network Error"); allData[idx] = oldDataSnapshot; applyFilters(); });
+      apiCall('updateOrder', updates)
+        .then(res => {
+          if(res !== "SUCCESS") alert("Error: " + res);
+          else {
+             // 1. Update Data Locally
+             const idx = allData.findIndex(d=>d.id===currentEditId);
+             if(idx>-1) {
+                allData[idx].status = newStatus;
+                allData[idx].filledDate = newFilled;
+                allData[idx].paidDate = newPaid;
+                allData[idx].remarks = newRemarks;
+                applyFilters();
+             }
+             // 2. Optimistic Notification Update
+             const tempLog = `<div class="notif-item" style="background:#eafff5">
+                    <div class="notif-time">Just Now</div>
+                    <div class="notif-id">${updates.id}</div>
+                    <div class="notif-detail">Status: ${updates.status}</div>
+                </div>`;
+             document.getElementById('notifList').insertAdjacentHTML('afterbegin', tempLog);
+             document.getElementById('notifBadge').classList.add('show');
+             
+             closeModal();
+             showToast("Order Updated Successfully");
+          }
+          btn.innerText = oldText;
+        })
+        .catch(e => { alert(e); btn.innerText = oldText; });
     }
 
+    // --- NOTIFICATIONS ---
     function toggleNotifs() {
         const p = document.getElementById('notifPanel');
-        if(!p.classList.contains('active')) { p.classList.add('active'); fetchLogs(); document.getElementById('notifBadge').classList.remove('show'); } 
-        else { p.classList.remove('active'); }
-    }
-    function fetchLogs() { 
-        if(USE_DEMO_MODE) { renderLogs([["10:30 AM", "ORD-TEST", "Demo Log Entry"]]); return; }
-        apiCall('getRecentLogs').then(renderLogs).catch(e => console.log("Log error", e)); 
-    }
-    function renderLogs(logs) {
-        const list = document.getElementById('notifList');
-        if(!logs || logs.length === 0) { list.innerHTML = '<div style="padding:20px; text-align:center; color:#b2bec3;">No recent edits.</div>'; return; }
-        list.innerHTML = logs.map(l => `<div class="notif-item"><div class="notif-time">${l[0]}</div><div class="notif-id">${l[1]}</div><div class="notif-detail">${l[2]}</div></div>`).join('');
+        const isActive = p.classList.contains('active');
+        if(!isActive) {
+            p.classList.add('active');
+            fetchLogs(); 
+            document.getElementById('notifBadge').classList.remove('show');
+        } else {
+            p.classList.remove('active');
+        }
     }
 
+    function fetchLogs() {
+        apiCall('getRecentLogs')
+        .then(renderLogs)
+        .catch(e => console.log("Log error", e));
+    }
+
+    function renderLogs(logs) {
+        const list = document.getElementById('notifList');
+        if(!logs || logs.length === 0) {
+            list.innerHTML = '<div style="padding:20px; text-align:center; color:#b2bec3;">No recent edits.</div>';
+            return;
+        }
+        list.innerHTML = logs.map(l => `
+            <div class="notif-item">
+                <div class="notif-time">${l[0]}</div>
+                <div class="notif-id">${l[1]}</div>
+                <div class="notif-detail">${l[2]}</div>
+            </div>
+        `).join('');
+    }
+
+    // --- UTILS ---
     function getCleanMonth(dateStr) {
       if (!dateStr || dateStr.length < 5) return "Invalid";
       const parts = dateStr.split('/');
       if (parts.length === 3) {
-        const d = new Date(parts[2], parts[1]-1, parts[0]);
-        if(isNaN(d.getTime())) return "Invalid";
-        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-        return `${months[d.getMonth()]} ${d.getFullYear()}`;
+         const d = new Date(parts[2], parts[1]-1, parts[0]);
+         if(isNaN(d.getTime())) return "Invalid";
+         const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+         return `${months[d.getMonth()]} ${d.getFullYear()}`;
       }
       return "Invalid";
     }
-    function parseDateToTs(str) { if(!str) return 0; const parts = str.trim().split('/'); if(parts.length !== 3) return 0; return new Date(parts[2], parts[1] - 1, parts[0]).getTime(); }
-    function fmt(n) { return n.toLocaleString('en-IN', {style:'currency', currency:'INR', minimumFractionDigits:0}); }
-    function copy(text) {
-        const el = document.createElement('textarea'); el.value = text; el.setAttribute('readonly', ''); el.style.position = 'absolute'; el.style.left = '-9999px'; document.body.appendChild(el); el.select();
-        try { document.execCommand('copy'); showToast("Copied: " + text); } catch (err) { prompt("Copy Manually:", text); } document.body.removeChild(el);
+
+    function parseDateToTs(str) {
+      if(!str) return 0;
+      const parts = str.trim().split('/'); 
+      if(parts.length !== 3) return 0;
+      return new Date(parts[2], parts[1] - 1, parts[0]).getTime(); 
     }
+
+    function fmt(n) { return n.toLocaleString('en-IN', {style:'currency', currency:'INR', minimumFractionDigits:0}); }
+    
+    function copy(text) {
+        const el = document.createElement('textarea');
+        el.value = text;
+        el.setAttribute('readonly', '');
+        el.style.position = 'absolute';
+        el.style.left = '-9999px';
+        document.body.appendChild(el);
+        const selected = document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false;
+        el.select();
+        try {
+            document.execCommand('copy');
+            showToast("Copied: " + text); 
+        } catch (err) {
+            prompt("Copy Manually:", text);
+        }
+        document.body.removeChild(el);
+        if (selected) {
+            document.getSelection().removeAllRanges();
+            document.getSelection().addRange(selected);
+        }
+    }
+    
     function showToast(msg) {
-        const t = document.getElementById('toastNotification'); document.getElementById('toastMessage').innerText = msg; t.classList.add('active');
+        const t = document.getElementById('toastNotification');
+        const m = document.getElementById('toastMessage');
+        m.innerText = msg;
+        t.classList.add('active');
         setTimeout(() => { t.classList.remove('active'); }, 3000); 
     }
 
-    /* -------------------- TAB SWITCHER LOGIC -------------------- */
-    // FIX 1: Accepting 'e' (event)
-    function switchTab(e, tabName) {
-        document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
-        e.currentTarget.classList.add('active'); // Using e.currentTarget
-        
-        const homeView = document.getElementById('view-home');
-        const graphView = document.getElementById('view-graph');
-        const listView = document.getElementById('view-list');
-        
-        homeView.style.display = 'none'; graphView.style.display = 'none'; listView.style.display = 'none';
-        
-        if (tabName === 'home') { homeView.style.display = 'block'; applyFilters(); } 
-        else if (tabName === 'graph') { graphView.style.display = 'block'; } 
-        else if (tabName === 'list') { listView.style.display = 'block'; applyFilters(); }
-        
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-    
-    let lastScrollTop = 0;
-    const navBar = document.getElementById('mainNavBar');
-    window.addEventListener('scroll', function() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        if (Math.abs(scrollTop - lastScrollTop) < 10) return;
-        if (scrollTop > lastScrollTop && scrollTop > 100) navBar.classList.add('nav-hidden');
-        else navBar.classList.remove('nav-hidden');
-        lastScrollTop = scrollTop;
-    });
+    setInterval(()=>{ 
+      apiCall('serverPing').catch(e => console.log("Ping failed"));
+    }, 180000);
 
-    setInterval(()=>{ if(!USE_DEMO_MODE) apiCall('serverPing').catch(e => console.log("Ping failed")); }, 180000);
   </script>
 </body>
+          </html>
                                                                                  </html>
